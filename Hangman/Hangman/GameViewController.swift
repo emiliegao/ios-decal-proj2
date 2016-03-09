@@ -19,13 +19,15 @@ class GameViewController: UIViewController {
     
     var phraseGuess:String = ""
     
-    var incorrectChars:[String] = [""]
+    var correctChars:[Character] = []
+    
+    var incorrectChars:[Character] = []
     
     var incorrectGuessString:String = "Incorrect Guesses: "
     
     var incorrectCount = 0
     
-    var keyPhrase:String = ""
+    var keyPhrase:[Character] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +35,8 @@ class GameViewController: UIViewController {
         // Do any additional setup after loading the view.
         let hangmanPhrases = HangmanPhrases()
         let phrase = hangmanPhrases.getRandomPhrase()
-        
-        keyPhrase = phrase
+    
+        keyPhrase = Array(phrase.characters)
         
         hangmanImage.image = UIImage(named: "hangman1.gif")
         
@@ -78,9 +80,12 @@ class GameViewController: UIViewController {
             
             inputTextField.text = ""
             error = true
-        } else {
+        } else if (inputTextField.text?.characters.count == 1){
+            let upperInput = inputTextField.text?.uppercaseString
+            let guessChar = Array(upperInput!.characters)[0]
+            
             let isChar = containsOnlyLetters(inputTextField.text!)
-            if (!isChar) {
+            if (!isChar || guessChar == " ") {
                 let alert = UIAlertView()
                 alert.title = "Error"
                 alert.message = "Guess must be an alphabetical character"
@@ -88,32 +93,63 @@ class GameViewController: UIViewController {
                 inputTextField.text = ""
                 error = true
             }
+            
+            if (correctChars.contains(guessChar) || incorrectChars.contains(guessChar)) {
+                let alert = UIAlertView()
+                alert.title = "Error"
+                alert.message = "Already guessed"
+                alert.addButtonWithTitle("OK")
+                alert.show()
+                
+                inputTextField.text = ""
+                error = true
+            }
+
         }
         
         if (error == false) {
             var contains = false
             
-            for i in guessStatus.text!.characters.indices {
-                if (String(i) == inputTextField.text) {
-                    contains = true
-                }
-            }
+            let upperInput = inputTextField.text?.uppercaseString
             
+            let guessChar = Array(upperInput!.characters)[0]
+            
+            contains = keyPhrase.contains(guessChar)
+            
+            //correct
             if (contains == true) {
-                var currGuess = guessStatus.text
-                if (currGuess!.characters.last == " ") {
-                    currGuess = String(currGuess!.characters.dropLast())
-                    currGuess = String(currGuess!.characters.dropLast())
-                } else {
-                    currGuess = String(currGuess!.characters.dropLast())
-            }
-            
-            inputTextField.text = ""
-            guessStatus.text = currGuess
-            } else {
-                incorrectChars[0] = (inputTextField.text!)
+                var finished = true
+                
+                correctChars.append(guessChar)
+                phraseGuess = ""
+                for var i = 0; i < keyPhrase.count; i++ {
+                    if (keyPhrase[i] == " ") {
+                        phraseGuess += " "
+                    } else {
+                        if (correctChars.contains(keyPhrase[i])) {
+                            phraseGuess += String(keyPhrase[i]).uppercaseString
+                        } else {
+                            phraseGuess += "_"
+                            finished = false
+                        }
+                    }
+                }
+                guessStatus.text = phraseGuess
                 inputTextField.text = ""
                 
+                if (finished == true) {
+                    let alert = UIAlertView()
+                    alert.title = "GAME OVER"
+                    alert.message = "You win! :)"
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                }
+            } else {
+                //incorrect
+                incorrectChars.append(guessChar)
+                
+                //incorrectChars[incorrectCount] = inputTextField.text!.characters.first!
+                inputTextField.text = ""
                 
                 incorrectCount++
                 if (incorrectCount == 0) {
@@ -130,12 +166,15 @@ class GameViewController: UIViewController {
                     hangmanImage.image = UIImage(named: "hangman6.gif")
                 } else if (incorrectCount == 6) {
                     hangmanImage.image = UIImage(named: "hangman7.gif")
-                    //END THE GAME
+                    let alert = UIAlertView()
+                    alert.title = "GAME OVER"
+                    alert.message = "You lose :("
+                    alert.addButtonWithTitle("OK")
+                    alert.show()
+                    
+                    inputTextField.text = ""
                 }
-            
-                for i in incorrectChars {
-                    incorrectGuessString += String(i)
-                }
+                incorrectGuessString += String(incorrectChars[incorrectChars.count-1])
                 
                 incorrectGuessLabel.text = incorrectGuessString
             }
