@@ -46,6 +46,9 @@ class GameViewController: UIViewController {
         incorrectChars.removeAll()
         incorrectGuessString = "Incorrect Guesses: "
         incorrectGuessLabel.text = incorrectGuessString
+        incorrectCount = 0
+        inputTextField.hidden = false;
+        guessButton.hidden = false;
         
         phraseGuess = ""
         
@@ -206,9 +209,34 @@ class GameViewController: UIViewController {
         return true
     }
 
+    @IBAction func newGameButtonPressed(sender: AnyObject) {
+        viewDidLoad()
+    }
     
     @IBAction func startOverButtonPressed(sender: AnyObject) {
-        viewDidLoad()
+        
+        hangmanImage.image = UIImage(named: "hangman1.gif")
+        
+        correctChars.removeAll()
+        incorrectChars.removeAll()
+        incorrectGuessString = "Incorrect Guesses: "
+        incorrectGuessLabel.text = incorrectGuessString
+        incorrectCount = 0
+        
+        phraseGuess = ""
+        
+        for var i = 0; i < keyPhrase.count; i++ {
+            if (keyPhrase[i] == " ") {
+                phraseGuess += " "
+            } else {
+                phraseGuess += "_"
+            }
+        }
+        
+        guessStatus.text = phraseGuess
+        
+        inputTextField.hidden = false;
+        guessButton.hidden = false;
     }
     
         
