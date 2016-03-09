@@ -62,11 +62,13 @@ class GameViewController: UIViewController {
             currGuess = String(currGuess!.characters.dropLast())
         }
         
+        inputTextField.text = ""
         guessStatus.text = currGuess
         
     }
     
     @IBAction func incorrectButtonPressed(sender: AnyObject) {
+        var error = 0
         if (inputTextField.text?.characters.count < 1) {
             let alert = UIAlertView()
             alert.title = "Error"
@@ -75,6 +77,7 @@ class GameViewController: UIViewController {
             alert.show()
             
             inputTextField.text = ""
+            error = 1
         } else if (inputTextField.text?.characters.count > 1) {
             let alert = UIAlertView()
             alert.title = "Error"
@@ -83,6 +86,7 @@ class GameViewController: UIViewController {
             alert.show()
             
             inputTextField.text = ""
+            error = 1
         } else {
             let isChar = containsOnlyLetters(inputTextField.text!)
             if (!isChar) {
@@ -91,38 +95,38 @@ class GameViewController: UIViewController {
                 alert.message = "Guess must be an alphabetical character"
                 alert.addButtonWithTitle("OK")
                 inputTextField.text = ""
+                error = 1
             }
         }
+        if (error == 0) {
+            incorrectChars[0] = (inputTextField.text!)
+            inputTextField.text = ""
         
-        incorrectChars[0] = (inputTextField.text!)
-        inputTextField.text = ""
         
-        
-        incorrectCount++
-        if (incorrectCount == 0) {
-            hangmanImage.image = UIImage(named: "hangman1.gif")
-        } else if (incorrectCount == 1) {
-            hangmanImage.image = UIImage(named: "hangman2.gif")
-        } else if (incorrectCount == 2) {
-            hangmanImage.image = UIImage(named: "hangman3.gif")
-        } else if (incorrectCount == 3) {
-            hangmanImage.image = UIImage(named: "hangman4.gif")
-        } else if (incorrectCount == 4) {
-            hangmanImage.image = UIImage(named: "hangman5.gif")
-        } else if (incorrectCount == 5) {
-            hangmanImage.image = UIImage(named: "hangman6.gif")
-        } else if (incorrectCount == 6) {
-            hangmanImage.image = UIImage(named: "hangman7.gif")
-        }
+            incorrectCount++
+            if (incorrectCount == 0) {
+                hangmanImage.image = UIImage(named: "hangman1.gif")
+            } else if (incorrectCount == 1) {
+                hangmanImage.image = UIImage(named: "hangman2.gif")
+            } else if (incorrectCount == 2) {
+                hangmanImage.image = UIImage(named: "hangman3.gif")
+            } else if (incorrectCount == 3) {
+                hangmanImage.image = UIImage(named: "hangman4.gif")
+            } else if (incorrectCount == 4) {
+                hangmanImage.image = UIImage(named: "hangman5.gif")
+            } else if (incorrectCount == 5) {
+                hangmanImage.image = UIImage(named: "hangman6.gif")
+            } else if (incorrectCount == 6) {
+                hangmanImage.image = UIImage(named: "hangman7.gif")
+            }
 
         
-        for i in incorrectChars {
-            incorrectGuessString += String(i)
+            for i in incorrectChars {
+                incorrectGuessString += String(i)
+            }
+        
+            incorrectGuessLabel.text = incorrectGuessString
         }
-        
-        incorrectGuessLabel.text = incorrectGuessString
-        
-        
     }
     
     func containsOnlyLetters(input: String) -> Bool {
