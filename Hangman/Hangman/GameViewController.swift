@@ -19,7 +19,7 @@ class GameViewController: UIViewController {
     
     var phraseGuess:String = ""
     
-    var incorrectChars:[Character] = []
+    var incorrectChars:[String] = [""]
     
     var incorrectGuessString:String = "Incorrect Guesses: "
     
@@ -32,7 +32,73 @@ class GameViewController: UIViewController {
         let hangmanPhrases = HangmanPhrases()
         let phrase = hangmanPhrases.getRandomPhrase()
         
-        incorrectCount = incorrectChars.count
+        hangmanImage.image = UIImage(named: "hangman1.gif")
+        
+        for i in phrase.characters.indices {
+            if (phrase[i] == " ") {
+                phraseGuess += " "
+            } else {
+                phraseGuess += "_"
+            }
+        }
+        
+        guessStatus.text = phraseGuess
+
+        
+        print(phrase)
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func correctButtonPressed(sender: AnyObject) {
+        var currGuess = guessStatus.text
+        if (currGuess!.characters.last == " ") {
+            currGuess = String(currGuess!.characters.dropLast())
+            currGuess = String(currGuess!.characters.dropLast())
+        } else {
+            currGuess = String(currGuess!.characters.dropLast())
+        }
+        
+        guessStatus.text = currGuess
+        
+    }
+    
+    @IBAction func incorrectButtonPressed(sender: AnyObject) {
+        if (inputTextField.text?.characters.count < 1) {
+            let alert = UIAlertView()
+            alert.title = "Error"
+            alert.message = "No inputted characters"
+            alert.addButtonWithTitle("OK")
+            alert.show()
+            
+            inputTextField.text = ""
+        } else if (inputTextField.text?.characters.count > 1) {
+            let alert = UIAlertView()
+            alert.title = "Error"
+            alert.message = "Too many characters"
+            alert.addButtonWithTitle("OK")
+            alert.show()
+            
+            inputTextField.text = ""
+        } else {
+            let isChar = containsOnlyLetters(inputTextField.text!)
+            if (!isChar) {
+                let alert = UIAlertView()
+                alert.title = "Error"
+                alert.message = "Guess must be an alphabetical character"
+                alert.addButtonWithTitle("OK")
+                inputTextField.text = ""
+            }
+        }
+        
+        incorrectChars[0] = (inputTextField.text!)
+        inputTextField.text = ""
+        
+        
+        incorrectCount++
         if (incorrectCount == 0) {
             hangmanImage.image = UIImage(named: "hangman1.gif")
         } else if (incorrectCount == 1) {
@@ -50,45 +116,22 @@ class GameViewController: UIViewController {
         }
 
         
-        for i in phrase.characters.indices {
-            if (phrase[i] == " ") {
-                phraseGuess += " "
-            } else {
-                phraseGuess += "_"
-            }
-        }
-        
-        guessStatus.text = phraseGuess
-
         for i in incorrectChars {
             incorrectGuessString += String(i)
         }
         
         incorrectGuessLabel.text = incorrectGuessString
         
-        print(phrase)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-    @IBAction func correctButtonPressed(sender: AnyObject) {
-        var currGuess = guessStatus.text
-        if (currGuess!.characters.last == " ") {
-            currGuess =
-                String(currGuess!.characters.dropLast())
-        } else {
-            currGuess = String(currGuess!.characters.dropLast())
+    func containsOnlyLetters(input: String) -> Bool {
+        for chr in input.characters {
+            if (!(chr >= "a" && chr <= "z") && !(chr >= "A" && chr <= "Z") ) {
+                return false
+            }
         }
-        
-        guessStatus.text = currGuess
-        
-    }
-    
-    @IBAction func incorrectButtonPressed(sender: AnyObject) {
-        
+        return true
     }
     
     
