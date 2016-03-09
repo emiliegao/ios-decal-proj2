@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -67,6 +68,7 @@
                         <viewControllerLayoutGuide type="bottom" id="p8I-q9-h3q"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bCv-le-IbC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bUs-JI-TXz">
@@ -79,8 +81,7 @@
                                         <exclude reference="FQ5-0M-GeP"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="256" y="307" width="100" height="100"/>
+                                <variation key="heightClass=regular">
                                     <mask key="constraints">
                                         <include reference="FQ5-0M-GeP"/>
                                     </mask>
@@ -91,9 +92,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="20" y="415" width="560" height="26"/>
-                                </variation>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0wZ-Re-5Cb">
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
@@ -107,8 +105,7 @@
                                         <exclude reference="VCk-0T-lUK"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="213" y="450" width="97" height="30"/>
+                                <variation key="heightClass=regular">
                                     <mask key="constraints">
                                         <include reference="VCk-0T-lUK"/>
                                     </mask>
@@ -119,18 +116,22 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="232" y="505" width="149" height="21"/>
-                                </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LWp-cS-008">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Guess"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="338" y="449" width="43" height="30"/>
-                                </variation>
                                 <connections>
                                     <action selector="guessButtonPressed:" destination="BpN-VX-Z0s" eventType="touchUpInside" id="5L6-3H-zLv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pen-DL-pzg">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Start Over"/>
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="271" y="503" width="71" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="startOverButtonPressed:" destination="BpN-VX-Z0s" eventType="touchUpInside" id="Zy6-DQ-m2w"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -142,6 +143,7 @@
                                 <variation key="heightClass=regular" constant="-22"/>
                             </constraint>
                             <constraint firstItem="NxL-a9-iwa" firstAttribute="centerX" secondItem="bCv-le-IbC" secondAttribute="centerX" id="3b4-Od-K0P"/>
+                            <constraint firstItem="Pen-DL-pzg" firstAttribute="centerX" secondItem="bCv-le-IbC" secondAttribute="centerX" id="4gb-bb-Y7H"/>
                             <constraint firstItem="uWI-I3-yhl" firstAttribute="centerY" secondItem="bCv-le-IbC" secondAttribute="centerY" id="8O4-fu-xX7"/>
                             <constraint firstItem="uWI-I3-yhl" firstAttribute="centerY" secondItem="bCv-le-IbC" secondAttribute="centerY" id="Djy-mu-QkB"/>
                             <constraint firstItem="uWI-I3-yhl" firstAttribute="leading" secondItem="bCv-le-IbC" secondAttribute="leadingMargin" id="E8a-8e-cLP"/>
@@ -159,6 +161,7 @@
                             <constraint firstItem="uWI-I3-yhl" firstAttribute="top" secondItem="bUs-JI-TXz" secondAttribute="bottom" constant="14" id="aPg-u3-0Bi"/>
                             <constraint firstItem="uWI-I3-yhl" firstAttribute="centerX" secondItem="bCv-le-IbC" secondAttribute="centerX" id="bp1-9i-mhf"/>
                             <constraint firstItem="LWp-cS-008" firstAttribute="top" secondItem="uWI-I3-yhl" secondAttribute="bottom" constant="8" id="bzF-kZ-lmF"/>
+                            <constraint firstItem="Pen-DL-pzg" firstAttribute="top" secondItem="NxL-a9-iwa" secondAttribute="bottom" constant="8" id="cWR-k3-k9v"/>
                             <constraint firstItem="uWI-I3-yhl" firstAttribute="top" secondItem="bUs-JI-TXz" secondAttribute="bottom" constant="8" id="da2-p5-LcW"/>
                             <constraint firstItem="uWI-I3-yhl" firstAttribute="trailing" secondItem="bCv-le-IbC" secondAttribute="trailingMargin" id="eEU-Hm-Gex"/>
                             <constraint firstItem="LWp-cS-008" firstAttribute="leading" secondItem="0wZ-Re-5Cb" secondAttribute="trailing" constant="27" id="f4R-dj-0xf"/>
@@ -179,6 +182,7 @@
                                 <exclude reference="0wZ-Re-5Cb"/>
                                 <exclude reference="NxL-a9-iwa"/>
                                 <exclude reference="LWp-cS-008"/>
+                                <exclude reference="Pen-DL-pzg"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="0Uh-U0-8Wt"/>
@@ -212,6 +216,8 @@
                                 <exclude reference="bzF-kZ-lmF"/>
                                 <exclude reference="f4R-dj-0xf"/>
                                 <exclude reference="ygW-gb-FDo"/>
+                                <exclude reference="4gb-bb-Y7H"/>
+                                <exclude reference="cWR-k3-k9v"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -221,6 +227,7 @@
                                 <include reference="0wZ-Re-5Cb"/>
                                 <include reference="NxL-a9-iwa"/>
                                 <include reference="LWp-cS-008"/>
+                                <include reference="Pen-DL-pzg"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="0Uh-U0-8Wt"/>
@@ -254,10 +261,13 @@
                                 <exclude reference="bzF-kZ-lmF"/>
                                 <include reference="f4R-dj-0xf"/>
                                 <include reference="ygW-gb-FDo"/>
+                                <include reference="4gb-bb-Y7H"/>
+                                <include reference="cWR-k3-k9v"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="guessButton" destination="LWp-cS-008" id="oiy-Wl-lN0"/>
                         <outlet property="guessStatus" destination="uWI-I3-yhl" id="hfs-sq-ojF"/>
                         <outlet property="hangmanImage" destination="bUs-JI-TXz" id="WCs-dM-obn"/>
                         <outlet property="incorrectGuessLabel" destination="NxL-a9-iwa" id="kuh-iu-yqU"/>

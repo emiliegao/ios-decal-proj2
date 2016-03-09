@@ -17,13 +17,15 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var incorrectGuessLabel: UILabel!
     
+    @IBOutlet weak var guessButton: UIButton!
+    
     var phraseGuess:String = ""
     
     var correctChars:[Character] = []
     
     var incorrectChars:[Character] = []
     
-    var incorrectGuessString:String = "Incorrect Guesses: "
+    var incorrectGuessString:String = ""
     
     var incorrectCount = 0
     
@@ -39,6 +41,13 @@ class GameViewController: UIViewController {
         keyPhrase = Array(phrase.characters)
         
         hangmanImage.image = UIImage(named: "hangman1.gif")
+        
+        correctChars.removeAll()
+        incorrectChars.removeAll()
+        incorrectGuessString = "Incorrect Guesses: "
+        incorrectGuessLabel.text = incorrectGuessString
+        
+        phraseGuess = ""
         
         for i in phrase.characters.indices {
             if (phrase[i] == " ") {
@@ -143,6 +152,10 @@ class GameViewController: UIViewController {
                     alert.message = "You win! :)"
                     alert.addButtonWithTitle("OK")
                     alert.show()
+                    
+                    inputTextField.text = ""
+                    inputTextField.hidden = true;
+                    guessButton.hidden = true;
                 }
             } else {
                 //incorrect
@@ -172,7 +185,10 @@ class GameViewController: UIViewController {
                     alert.addButtonWithTitle("OK")
                     alert.show()
                     
+                    
                     inputTextField.text = ""
+                    inputTextField.hidden = true;
+                    guessButton.hidden = true;
                 }
                 incorrectGuessString += String(incorrectChars[incorrectChars.count-1])
                 
@@ -191,84 +207,9 @@ class GameViewController: UIViewController {
     }
 
     
-    
-//    @IBAction func correctButtonPressed(sender: AnyObject) {
-//        var currGuess = guessStatus.text
-//        if (currGuess!.characters.last == " ") {
-//            currGuess = String(currGuess!.characters.dropLast())
-//            currGuess = String(currGuess!.characters.dropLast())
-//        } else {
-//            currGuess = String(currGuess!.characters.dropLast())
-//        }
-//        
-//        inputTextField.text = ""
-//        guessStatus.text = currGuess
-//        
-//    }
-//    
-//    @IBAction func incorrectButtonPressed(sender: AnyObject) {
-//        var error = 0
-//        if (inputTextField.text?.characters.count < 1) {
-//            let alert = UIAlertView()
-//            alert.title = "Error"
-//            alert.message = "No inputted characters"
-//            alert.addButtonWithTitle("OK")
-//            alert.show()
-//            
-//            inputTextField.text = ""
-//            error = 1
-//        } else if (inputTextField.text?.characters.count > 1) {
-//            let alert = UIAlertView()
-//            alert.title = "Error"
-//            alert.message = "Too many characters"
-//            alert.addButtonWithTitle("OK")
-//            alert.show()
-//            
-//            inputTextField.text = ""
-//            error = 1
-//        } else {
-//            let isChar = containsOnlyLetters(inputTextField.text!)
-//            if (!isChar) {
-//                let alert = UIAlertView()
-//                alert.title = "Error"
-//                alert.message = "Guess must be an alphabetical character"
-//                alert.addButtonWithTitle("OK")
-//                inputTextField.text = ""
-//                error = 1
-//            }
-//        }
-//        if (error == 0) {
-//            incorrectChars[0] = (inputTextField.text!)
-//            inputTextField.text = ""
-//        
-//        
-//            incorrectCount++
-//            if (incorrectCount == 0) {
-//                hangmanImage.image = UIImage(named: "hangman1.gif")
-//            } else if (incorrectCount == 1) {
-//                hangmanImage.image = UIImage(named: "hangman2.gif")
-//            } else if (incorrectCount == 2) {
-//                hangmanImage.image = UIImage(named: "hangman3.gif")
-//            } else if (incorrectCount == 3) {
-//                hangmanImage.image = UIImage(named: "hangman4.gif")
-//            } else if (incorrectCount == 4) {
-//                hangmanImage.image = UIImage(named: "hangman5.gif")
-//            } else if (incorrectCount == 5) {
-//                hangmanImage.image = UIImage(named: "hangman6.gif")
-//            } else if (incorrectCount == 6) {
-//                hangmanImage.image = UIImage(named: "hangman7.gif")
-//            }
-//
-//        
-//            for i in incorrectChars {
-//                incorrectGuessString += String(i)
-//            }
-//        
-//            incorrectGuessLabel.text = incorrectGuessString
-//        }
-//    }
-//
-    
+    @IBAction func startOverButtonPressed(sender: AnyObject) {
+        viewDidLoad()
+    }
     
         
     /*
